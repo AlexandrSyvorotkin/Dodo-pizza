@@ -3,28 +3,59 @@ import {Header} from "./components";
 import {Home, Cart} from "./pages";
 import {Route} from 'react-router-dom'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import store from './redux/store'
 
-function App() {
-    const [pizzas, setPizzas] = useState([]);
 
-    useEffect(() => {
+import {setPizzas as setPizzasAction} from './redux/actions/pizzas'
+
+// function App() {
+//
+//     useEffect(() => {
+//         axios.get('http://localhost:3000/db.json').then(({data})=> {
+//             setPizzas(data.pizzas)
+//         })
+//     }, []);
+//
+//
+//     return ;
+// }
+
+
+class App extends React.Component {
+    componentDidMount() {
         axios.get('http://localhost:3000/db.json').then(({data})=> {
-            setPizzas(data.pizzas)
+            this.props.savePizzas(data.pizzas)
         })
-    }, []);
+    }
 
-
-    return (
-        <div>
-            <div className="wrapper">
-                <Header/>
-                <div className="content">
-                    <Route path='/' render={()=> <Home items={pizzas}/>} exact/>
-                    <Route path='/Cart' component={Cart} exact/>
+    render() {
+        console.log(this.props)
+        return (
+            <div>
+                <div className="wrapper">
+                    <Header/>
+                    <div className="content">
+                        <Route path='/' render={()=> <Home items={this.props.items}/>} exact/>
+                        <Route path='/Cart' component={Cart} exact/>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        )
+    }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        items: state.pizzas.items,
+        filters: state.filters
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        savePizzas: (items)=> dispatch(setPizzasAction(items)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
