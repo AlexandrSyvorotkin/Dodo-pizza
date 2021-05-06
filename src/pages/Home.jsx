@@ -5,7 +5,10 @@ import {setCategory, setSortBy} from "../redux/actions/filters";
 import {fetchPizzas} from "../redux/actions/pizzas";
 
 const categoriesNames = ['Мясные','Вегетарианская','Гриль','Острые','Закрытые']
-const sortItems = [{name: 'популярности', type: 'popular'},{name: 'цене', type: 'price'},{name:'алфавит', type: 'alphabet'}
+const sortItems = [
+    {name: 'популярности', type: 'popular', order: 'desc'},
+    {name: 'цене', type: 'price', order: 'desc'},
+    {name:'алфавит', type: 'name', order: 'asc'}
 ]
 
 const Home = () => {
@@ -16,8 +19,8 @@ const Home = () => {
 
 
     useEffect(() => {
-            dispatch(fetchPizzas())
-    }, []) 
+            dispatch(fetchPizzas(sortBy, category))
+    }, [category, sortBy])
 
     const onSelectCategory = useCallback((index)=> {
         dispatch(setCategory(index))
@@ -37,7 +40,7 @@ const Home = () => {
                     items={categoriesNames}
                 />
                 <SortPopup
-                    activeSortType={sortBy}
+                    activeSortType={sortBy.type}
                     items={sortItems}
                     onSelectSortType={onSelectSortType}
                 />
@@ -48,6 +51,7 @@ const Home = () => {
                 ? items.map(obj => <PizzaBlock key={obj.id} isLoading={true} {...obj} />)
                 : Array(12).fill(0).map((_, index)=> ( <PizzaLoadingBlock key={index}/>))}
             </div>
+
         </div>
     );
 };

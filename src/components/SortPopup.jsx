@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const SortPopup = React.memo(function SortPopup({items, activeSortType, onClickSortType}) {
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const sortRef = useRef(null);
+    const sortRef = useRef();
     const aciveLabel = items.find((obj) => obj.type === activeSortType).name
 
 
@@ -54,7 +54,7 @@ const SortPopup = React.memo(function SortPopup({items, activeSortType, onClickS
                         {items && items.map((obj, index) => (
                             <li
                                 className={activeSortType === obj.type ? 'active' : ''}
-                                onClick={() => onSelectItem(obj.type)}
+                                onClick={() => onSelectItem(obj)}
                                 key={`${obj.type} ${index}`}>
                                 {obj.name}
                             </li>
@@ -67,8 +67,8 @@ const SortPopup = React.memo(function SortPopup({items, activeSortType, onClickS
 })
 
 SortPopup.propTypes ={
-    activeSortType: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.object).isRequired,
+    activeSortType: PropTypes.oneOf([PropTypes.number, null]),
+    items: PropTypes.arrayOf(PropTypes.string).isRequired,
     onClickSortType: PropTypes.func.isRequired
 }
 
