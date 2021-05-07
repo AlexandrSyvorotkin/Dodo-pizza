@@ -42,7 +42,7 @@ const Home = () => {
                 <SortPopup
                     activeSortType={sortBy.type}
                     items={sortItems}
-                    onSelectSortType={onSelectSortType}
+                    onClickSortType={onSelectSortType}
                 />
             </div>
             <h2 className="content__title">Все пиццы</h2>
