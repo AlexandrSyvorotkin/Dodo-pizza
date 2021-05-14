@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Button from "../Button";
 // import LoadingBlock from './LoadingBlock'
 
-const Index = ({id, name, imageUrl, price, types, sizes, onClickAddPizza}) => {
+function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza, addedCount }) {
 
 
     const availableTypes = ['тонкое', 'традиционное']
@@ -19,6 +19,18 @@ const Index = ({id, name, imageUrl, price, types, sizes, onClickAddPizza}) => {
     const onSelectSize = (index) => {
         setActiveSize(index)
     }
+
+    const onAddPizza = () => {
+        const obj = {
+            id,
+            name,
+            imageUrl,
+            price,
+            size: availableSizes[activeSize],
+            type: availableTypes[activeType],
+        };
+        onClickAddPizza(obj);
+    };
 
 
     return (
@@ -59,7 +71,7 @@ const Index = ({id, name, imageUrl, price, types, sizes, onClickAddPizza}) => {
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">{price}</div>
-                <Button onClick={()=> onClickAddPizza({id, name, imageUrl, price})} className="button--add" outline>
+                <Button onClick={onAddPizza} className="button--add" outline>
                     <svg
                         width="12"
                         height="12"
@@ -73,7 +85,7 @@ const Index = ({id, name, imageUrl, price, types, sizes, onClickAddPizza}) => {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>2</i>
+                    {addedCount && <i>{addedCount}</i>}
                 </Button>
             </div>
         </div>
@@ -82,7 +94,7 @@ const Index = ({id, name, imageUrl, price, types, sizes, onClickAddPizza}) => {
 };
 
 
-Index.propTypes = {
+PizzaBlock.propTypes = {
     name: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
@@ -91,11 +103,11 @@ Index.propTypes = {
     onClickAddPizza: PropTypes.func
 };
 
-Index.defaultProps = {
+PizzaBlock.defaultProps = {
     name: '---',
     price: 0,
     types: [],
     sizes: [],
 }
 
-export default Index;
+export default PizzaBlock;
