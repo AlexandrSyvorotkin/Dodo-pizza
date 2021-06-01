@@ -1,6 +1,22 @@
 import React from 'react';
+import Button from "./Button";
 
-const CartItem = ({name, type, size}) => {
+const CartItem = ({id, name, type, size, totalPrice, totalCount, onRemove, onMinus, onPlus}) => {
+
+    const handleRemoveClick = () => {
+        onRemove(id)
+    }
+
+    const handlePlusItem = () => {
+        onPlus(id);
+    };
+
+    const handleMinusItem = () => {
+        onMinus(id);
+    };
+
+
+
     return (
         <div className="cart__item">
             <div className="cart__item-img">
@@ -15,7 +31,7 @@ const CartItem = ({name, type, size}) => {
                 <p>{type} тесто, {size} см.</p>
             </div>
             <div className="cart__item-count">
-                <div className="button button--outline button--circle cart__item-count-minus">
+                <Button onClick={handleMinusItem} className="button button--outline button--circle cart__item-count-minus">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -26,9 +42,9 @@ const CartItem = ({name, type, size}) => {
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
-                <b>2</b>
-                <div className="button button--outline button--circle cart__item-count-plus">
+                </Button>
+                <b>{totalCount}</b>
+                <Button on onClick={handlePlusItem} className="button button--outline button--circle cart__item-count-plus">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -39,13 +55,13 @@ const CartItem = ({name, type, size}) => {
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </Button>
             </div>
             <div className="cart__item-price">
-                <b>770 ₽</b>
+                <b>{totalPrice} ₽</b>
             </div>
             <div className="cart__item-remove">
-                <div className="button button--outline button--circle">
+                <Button onClick={handleRemoveClick} className="button button--outline button--circle">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -56,7 +72,7 @@ const CartItem = ({name, type, size}) => {
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </Button>
             </div>
         </div>
     );
