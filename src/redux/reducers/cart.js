@@ -22,6 +22,8 @@ const getTotalSum = (obj, path) => {
 
 const cart = (state = initialState, action) => {
     switch (action.type) {
+
+
         case 'ADD_PIZZA_CART': {
             const currentPizzaItems = !state.items[action.payload.id]
                 ? [action.payload]
@@ -109,7 +111,7 @@ const cart = (state = initialState, action) => {
         }
 
         case 'CLEAR_CART':
-            return { totalPrice: 0, totalCount: 0, items: {} };
+            return {totalPrice: 0, totalCount: 0, items: {}};
 
         default:
             return state;

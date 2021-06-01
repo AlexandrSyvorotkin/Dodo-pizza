@@ -5,19 +5,19 @@ export const setLoaded = payload => ({
     payload,
 })
 
-export const fetchPizzas = (sortBy, category) => (dispatch)  => {
+export const fetchPizzas = (sortBy, category) => (dispatch) => {
     dispatch({
         type: "SET_LOADED",
         payload: false
-})
+    })
     axios
         .get(
             `/pizzas?${
-            category !==null ? `category=${category}` : ''
+                category !== null ? `category=${category}` : ''
             }&_sort=${sortBy.type}&_order=${sortBy.order}`)
-            .then(({data}) => {
+        .then(({data}) => {
             dispatch(setPizzas(data))
-    })
+        })
 }
 
 export const setPizzas = (items) => ({

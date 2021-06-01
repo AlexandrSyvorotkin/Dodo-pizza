@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import PropTypes from "prop-types";
 
 const SortPopup = React.memo(function SortPopup({items, activeSortType, onClickSortType}) {
     const [visiblePopup, setVisiblePopup] = useState(false);
@@ -29,13 +28,12 @@ const SortPopup = React.memo(function SortPopup({items, activeSortType, onClickS
         document.body.addEventListener('click', handleOutsideClick)
     }, []);
 
-
     return (
         <div>
             <div ref={sortRef} className="sort">
                 <div className="sort__label">
                     <svg
-                        className={visiblePopup ? 'rotated': ''}
+                        className={visiblePopup ? 'rotated' : ''}
                         width="10"
                         height="6"
                         viewBox="0 0 10 6"
@@ -66,16 +64,6 @@ const SortPopup = React.memo(function SortPopup({items, activeSortType, onClickS
         </div>
     );
 })
-
-SortPopup.propTypes ={
-    activeSortType: PropTypes.oneOf([PropTypes.number, null]),
-    items: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onClickSortType: PropTypes.func.isRequired
-}
-
-SortPopup.defaultProps ={
-    items: []
-}
 
 
 export default SortPopup;
